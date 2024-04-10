@@ -1,0 +1,46 @@
+node_1|node_2|edge|chunk_id
+ai-driven content|digital experience|AI-driven content dominates our digital experience|de3236ce755440119adf601fb14d33a5
+ai-driven content|scaling|Automatic delivery has enabled scaling of AI-driven content|de3236ce755440119adf601fb14d33a5
+ai-driven content|personalised product recommendations|AI-driven content enables personalised product recommendations|de3236ce755440119adf601fb14d33a5
+ai-driven content|tailored ads|AI-driven content enables tailored ads|de3236ce755440119adf601fb14d33a5
+ai-driven content|customised feeds|AI-driven content enables customised feeds|de3236ce755440119adf601fb14d33a5
+ai-driven content|generated content|AI-driven content includes generated content|de3236ce755440119adf601fb14d33a5
+ux community|ai|UX community is trying to come to grips with the notion of AI|de3236ce755440119adf601fb14d33a5
+ux community|design for ai|UX community is trying to design for AI|de3236ce755440119adf601fb14d33a5
+ux community|position of researchers and designers in ai space|UX community is asking about the position of researchers and designers in AI space|de3236ce755440119adf601fb14d33a5
+ux community|stay relevant in ai movement|UX community is asking how to stay relevant in AI movement|de3236ce755440119adf601fb14d33a5
+content relevance|users' interest in the content|The relevance of the content to users is measured by their level of interest in it.|08dc7e4f7ae24a10bbcf3b8917cd1aed
+content relevance|users' preferences|The relevance of the content to users is determined by their stated preferences.|08dc7e4f7ae24a10bbcf3b8917cd1aed
+users' interest in the content|users' engagement with the content|Users' level of interest in the content influences their engagement with it.|08dc7e4f7ae24a10bbcf3b8917cd1aed
+trust|controllability|Users trust the content more when they feel they have control over it.|08dc7e4f7ae24a10bbcf3b8917cd1aed
+trust|understandability|Users trust the content more when they understand it.|08dc7e4f7ae24a10bbcf3b8917cd1aed
+trust|transparency|Users trust the content more when they perceive it as transparent.|08dc7e4f7ae24a10bbcf3b8917cd1aed
+information retrieval and search engines|formal performance metrics|In the early 2000s, the convention was to rely on formal performance metrics (such as accuracy and breadth) to tell whether a retrieval technique was good, measured against standard benchmark datasets.|dff4e30dc0b643c68f355fa64ca3ee04
+formal performance metrics|user experience|Despite this growing recognition of the importance of user experience, recent surveys still report an over-reliance on formal metrics in predicting actual user adoption.|dff4e30dc0b643c68f355fa64ca3ee04
+user experience|real data|It was the user experience that played an increasing role, and it was needed to test UI and interaction, as well as to test how different algorithms contributed to the experience.|dff4e30dc0b643c68f355fa64ca3ee04
+ml engineers|black box service|It was a simple, classic case where we needed more rapid prototyping with real data, not only to test UI and interaction, but also to test how different algorithms contributed to the experience.|dff4e30dc0b643c68f355fa64ca3ee04
+purchase intention|use intention|Purchase Intention causes Use Intention|64f0099b9fa34c96b4fb5588a5b49e99
+purchase intention|relevance|Purchase Intention is caused by Relevance|64f0099b9fa34c96b4fb5588a5b49e99
+use intention|relevance|Use Intention is caused by Relevance|64f0099b9fa34c96b4fb5588a5b49e99
+relevance|explanation|Explanation contributes to Relevance|64f0099b9fa34c96b4fb5588a5b49e99
+relevance|variety|Variety contributes to Relevance|64f0099b9fa34c96b4fb5588a5b49e99
+tools to keep up to date|satisfaction with existing tools|The user expresses their current level of satisfaction with the tools they use to keep up to date.|a6ef82cdffcd444d991bf91aac97d5da
+tools to keep up to date|recommender in the experiment|The user compares their satisfaction with the recommender in the experiment to their current tools.|a6ef82cdffcd444d991bf91aac97d5da
+tools to keep up to date|development budget|The user considers how they would invest a development budget to support tools for keeping up to date.|a6ef82cdffcd444d991bf91aac97d5da
+development budget|tools you currently use to keep up to date|The user decides whether to invest in improving their current tools or replacing them with new ones.|a6ef82cdffcd444d991bf91aac97d5da
+development budget|improve this recommender|The user decides to invest in improving the recommender to replace their current tools.|a6ef82cdffcd444d991bf91aac97d5da
+development budget|other|The user considers investing in other tools or solutions to help them keep up to date.|a6ef82cdffcd444d991bf91aac97d5da
+questionnaires|limitations|Questionnaires have limitations, such as being attitudinal and indirectly linked to actual behavior.|cee65613c68e4af2b3ef9bd17df09a4c
+questionnaires|surveys|Questionnaires are a type of survey.|cee65613c68e4af2b3ef9bd17df09a4c
+surveys|attitudinal|Surveys are attitudinal and depend on explicit statements made by participants.|cee65613c68e4af2b3ef9bd17df09a4c
+surveys|behavior|Surveys are indirectly linked to actual behavior.|cee65613c68e4af2b3ef9bd17df09a4c
+ai|responsive servants|AI is framed as responsive servants in the given context.|2c4a814eb5d3460d8894c0aa1b805dac
+ai|humans|AI interacts with humans in the given context.|2c4a814eb5d3460d8894c0aa1b805dac
+ai|ux research and design cycles|AI is suggested to streamline UX research and design cycles in the given context.|2c4a814eb5d3460d8894c0aa1b805dac
+ai|automating a/b testing|AI is capable of automating A/B testing in the given context.|2c4a814eb5d3460d8894c0aa1b805dac
+ai|political campaigns|AI has influenced political campaigns through psychometric profiling in the given context.|2c4a814eb5d3460d8894c0aa1b805dac
+ai|fully automated digital environments|AI is capable of creating and managing fully automated digital environments in the given context.|2c4a814eb5d3460d8894c0aa1b805dac
+ai|value extraction|AI is capable of extracting value, whether financial, political or attention in the given context.|2c4a814eb5d3460d8894c0aa1b805dac
+humans|users|Humans are referred to as users in the given context.|2c4a814eb5d3460d8894c0aa1b805dac
+humans|components of computational politics|Humans are components of computational politics in the given context.|2c4a814eb5d3460d8894c0aa1b805dac
+humans|experience|The question is raised about the meaning of experience for humans in the given context.|2c4a814eb5d3460d8894c0aa1b805dac
