@@ -1,0 +1,99 @@
+node_1|node_2|edge|chunk_id
+mr. dursley|owls|Mr. Dursley didn’t see the owls swooping past in broad daylight, though people down in the street did. He was so engrossed in his work that he didn’t notice the owls flying overhead.|aa329ec9274541b796d0498287930a2e
+mr. dursley|people down in the street|People down in the street saw the owls swooping past in broad daylight and pointed and gazed open-mouthed as owl after owl sped overhead.|aa329ec9274541b796d0498287930a2e
+mr. dursley|group of people in cloaks|Mr. Dursley eyed the group of people in cloaks angrily as he passed them. He didn’t know why, but they made him uneasy.|aa329ec9274541b796d0498287930a2e
+group of people in cloaks|the potters|The group of people in cloaks were whispering excitedly about the Potters and their son, Harry.|aa329ec9274541b796d0498287930a2e
+group of people in cloaks|harry|The group of people in cloaks were whispering excitedly about the Potters and their son, Harry.|aa329ec9274541b796d0498287930a2e
+mr. dursley|fear|Mr. Dursley was flooded with fear when he saw the whisperers.|36f9655fac4d4f1492c21d73fc1e04df
+mr. dursley|fear|Mr. Dursley thought better of it and didn’t want to mention the whisperers to fear.|36f9655fac4d4f1492c21d73fc1e04df
+mr. dursley|his nephew|Mr. Dursley was worried about his nephew, but he wasn’t sure of his name.|36f9655fac4d4f1492c21d73fc1e04df
+mr. dursley|his sister|Mr. Dursley didn’t want to upset his sister by mentioning her sister.|36f9655fac4d4f1492c21d73fc1e04df
+mr. dursley|people in cloaks|Mr. Dursley was worried about the people in cloaks.|36f9655fac4d4f1492c21d73fc1e04df
+fear|upset|Mr. Dursley didn’t want to upset his sister with fear.|36f9655fac4d4f1492c21d73fc1e04df
+mr. dursley|concentration|Mr. Dursley found it hard to concentrate on drills because of his worry.|36f9655fac4d4f1492c21d73fc1e04df
+mr. dursley|stranger|Mr. Dursley was hugged by the stranger|4e0363abf24546f798d691f4ddc0d438
+stranger|you-know-who|The stranger mentioned You-Know-Who and was happy about his departure|4e0363abf24546f798d691f4ddc0d438
+stranger|muggle|The stranger called Mr. Dursley a Muggle|4e0363abf24546f798d691f4ddc0d438
+mr. dursley|cat|Mr. Dursley saw the cat on his garden wall twice|4e0363abf24546f798d691f4ddc0d438
+mr. dursley|harry potter|Mr. Dursley has negative opinion about Harry Potter and his family.|83ee2e3fee4145c9a906a88a8e0784e6
+mr. dursley|the potters|Mr. Dursley has negative opinion about The Potters and their kind.|83ee2e3fee4145c9a906a88a8e0784e6
+the cat|the potters|The cat is waiting for something related to The Potters.|83ee2e3fee4145c9a906a88a8e0784e6
+professor mcgonagall|dumbledore|Professor McGonagall was anxious to discuss with Dumbledore the rumors about Voldemort's recent appearance in Godric's Hollow and the supposed death of the Potters. Dumbledore remained silent on the matter.|bf06cf1555d24d7980a00a10396f8a75
+professor mcgonagall|voldemort|Professor McGonagall believed that Voldemort had gone to Godric's Hollow to find and harm the Potters.|bf06cf1555d24d7980a00a10396f8a75
+dumbledore|voldemort|Dumbledore did not confirm or deny the rumors about Voldemort's recent appearance and the supposed death of the Potters.|bf06cf1555d24d7980a00a10396f8a75
+professor mcgonagall|lily and james potter|Professor McGonagall passed on the rumors that Lily and James Potter had been killed by Voldemort.|bf06cf1555d24d7980a00a10396f8a75
+professor mcgonagall|dumbledore|Professor McGonagall disagrees with Dumbledore about Harry's new family, believing they will not understand him due to their behavior. Dumbledore insists that they are the best place for Harry to live and has written them a letter.|33c068fb0cd24cf6bc746ac07a58169b
+professor mcgonagall|harry potter|Professor McGonagall expresses concern for Harry's well-being and believes he will not be understood by his new family.|33c068fb0cd24cf6bc746ac07a58169b
+dumbledore|harry potter|Dumbledore believes Harry should live with his aunt and uncle, as they are the best place for him to grow up.|33c068fb0cd24cf6bc746ac07a58169b
+professor mcgonagall|harry potter's aunt and uncle|Professor McGonagall doubts that Harry's aunt and uncle will be able to understand or accept Harry due to their behavior.|33c068fb0cd24cf6bc746ac07a58169b
+dumbledore|harry potter's aunt and uncle|Dumbledore believes that Harry's aunt and uncle are the best people for Harry to live with.|33c068fb0cd24cf6bc746ac07a58169b
+dumbledore|hagrid|Dumbledore trusts Hagrid with his life|ea94a9b799494748b2cc776d07a4744e
+hagrid|bringing harry potter|Hagrid is bringing Harry Potter|ea94a9b799494748b2cc776d07a4744e
+professor mcgonagall|dumbledore|Professor McGonagall questions Dumbledore's decision to trust Hagrid|ea94a9b799494748b2cc776d07a4744e
+dumbledore|harry potter|Dumbledore arranges for Harry Potter to be brought to Hogwarts|ea94a9b799494748b2cc776d07a4744e
+hagrid|dumbledore|Hagrid borrowed a motorcycle from Sirius Black and brought Harry Potter to Hogwarts. Dumbledore was relieved to see Hagrid and asked about the motorcycle and Harry.|d78d1a098085488c812bcf96c82a8894
+hagrid|professor mcgonagall|Hagrid arrived at Hogwarts with Harry Potter, and McGonagall was present when they discovered Harry's scar.|d78d1a098085488c812bcf96c82a8894
+hagrid|sirius black|Sirius Black lent his motorcycle to Hagrid for transporting Harry Potter to Hogwarts.|d78d1a098085488c812bcf96c82a8894
+harry potter|dumbledore|Dumbledore recognized Harry Potter by his scar and welcomed him to Hogwarts.|d78d1a098085488c812bcf96c82a8894
+harry potter|professor mcgonagall|Professor McGonagall saw Harry Potter's scar when he was brought to Hogwarts.|d78d1a098085488c812bcf96c82a8894
+dumbledore|harry potter|Dumbledore takes Harry in his arms and lays him on the doorstep of the Dursleys' house, giving him a letter to be found later. Dumbledore is a professor at Hogwarts and the headmaster of the school.|da2a8724cdc84fed8c70600b4121d196
+hagrid|lily and james potter|Hagrid is emotional about the death of Harry's parents and his placement with the Muggles.|da2a8724cdc84fed8c70600b4121d196
+hagrid|dumbledore|Hagrid asks Dumbledore if he can say goodbye to Harry, and Dumbledore allows it. Dumbledore is the headmaster of Hogwarts and Hagrid is a caretaker at the school.|da2a8724cdc84fed8c70600b4121d196
+professor mcgonagall|hagrid|Professor McGonagall tries to quiet Hagrid to prevent them from being heard by Muggles.|da2a8724cdc84fed8c70600b4121d196
+dumbledore|harry potter|Dumbledore gives Harry a letter to be found later.|da2a8724cdc84fed8c70600b4121d196
+dumbledore|professor mcgonagall|Dumbledore nods to Professor McGonagall and Professor McGonagall blows her nose in reply.|fd0e938caa194a079522986e813710ed
+dumbledore|hagrid|Dumbledore and Hagrid say goodbye to each other.|fd0e938caa194a079522986e813710ed
+dumbledore|privet drive|Dumbledore makes Privet Drive glow by clicking his Put-Outer.|fd0e938caa194a079522986e813710ed
+dumbledore|harry potter|Dumbledore wishes Harry good luck.|fd0e938caa194a079522986e813710ed
+professor mcgonagall|dumbledore|Dumbledore nods to Professor McGonagall and Professor McGonagall blows her nose in reply.|fd0e938caa194a079522986e813710ed
+hagrid|dumbledore|Dumbledore and Hagrid say goodbye to each other.|fd0e938caa194a079522986e813710ed
+hagrid|motorcycle|Hagrid rides away on his motorcycle.|fd0e938caa194a079522986e813710ed
+dumbledore|tabby cat|Dumbledore can see a tabby cat slinking around the corner at the other end of the street.|fd0e938caa194a079522986e813710ed
+dumbledore|bundle of blankets|Dumbledore can see a bundle of blankets on the step of number four.|fd0e938caa194a079522986e813710ed
+harry potter|boy who lived|Harry Potter is referred to as 'the boy who lived'|a4f8287d169748f5b9df49f552b0ab3a
+people|harry potter|People are raising a toast to Harry Potter, referring to him as 'the boy who lived'|a4f8287d169748f5b9df49f552b0ab3a
+glasses|vanquished|People are holding up their glasses, a symbol of vanquishing something|a4f8287d169748f5b9df49f552b0ab3a
+people|harry potter|People are expressing their admiration and respect towards Harry Potter by toasting to him|a4f8287d169748f5b9df49f552b0ab3a
+harry|uncle vernon|Uncle Vernon is Harry's uncle and often shouts at Harry to comb his hair.|e490e4b523a646c2a6baaf42dbc9a470
+harry|dudley|Dudley is Harry's cousin and often receives more presents than Harry.|e490e4b523a646c2a6baaf42dbc9a470
+dudley|aunt petunia|Aunt Petunia is Dudley's mother.|e490e4b523a646c2a6baaf42dbc9a470
+dudley|uncle vernon|Uncle Vernon is Dudley's father.|e490e4b523a646c2a6baaf42dbc9a470
+harry|aunt petunia|Aunt Petunia is Harry's aunt and often compares Dudley to a baby angel while Harry is compared to a pig.|e490e4b523a646c2a6baaf42dbc9a470
+aunt petunia|mrs. figg|Aunt Petunia announces that Mrs. Figg has broken her leg and can't take care of Harry anymore.|d12dd6e92e8d4e0ebbb3b10e8a1219d5
+mrs. figg|harry|Mrs. Figg is unable to take care of Harry due to her broken leg.|d12dd6e92e8d4e0ebbb3b10e8a1219d5
+aunt petunia|uncle vernon|Aunt Petunia informs Uncle Vernon about Mrs. Figg's broken leg.|d12dd6e92e8d4e0ebbb3b10e8a1219d5
+uncle vernon|dudley|Uncle Vernon ruffles Dudley's hair and praises him for wanting 'his money's worth'.|d12dd6e92e8d4e0ebbb3b10e8a1219d5
+dudley|harry|Dudley unwraps presents while Harry watches.|d12dd6e92e8d4e0ebbb3b10e8a1219d5
+mrs. figg|harry potter|Mrs. Figg takes care of Harry every year when Dudley goes out with friends. Harry hates staying with her.|bc5b867580d04e0f8739fca33c1ddb73
+mrs. figg|aunt petunia|Aunt Petunia dislikes Harry and doesn't want him to stay with them when Mrs. Figg is unable to take care of him.|bc5b867580d04e0f8739fca33c1ddb73
+mrs. figg|uncle vernon|Uncle Vernon suggests calling Mrs. Figg's sister Marge to take care of Harry instead.|bc5b867580d04e0f8739fca33c1ddb73
+aunt petunia|harry potter|Aunt Petunia dislikes Harry and speaks about him as if he's not there.|bc5b867580d04e0f8739fca33c1ddb73
+uncle vernon|harry potter|Uncle Vernon suggests leaving Harry at home when Mrs. Figg is unable to take care of him.|bc5b867580d04e0f8739fca33c1ddb73
+uncle vernon|marge|Uncle Vernon suggests calling Marge to take care of Harry instead of Mrs. Figg.|bc5b867580d04e0f8739fca33c1ddb73
+aunt petunia|marge|Aunt Petunia mentions that Marge hates Harry.|bc5b867580d04e0f8739fca33c1ddb73
+harry|uncle vernon|Uncle Vernon warned Harry not to do anything suspicious, suspecting Harry of causing strange things to happen.|ef6c8ca593d54b3f84ee495f0601ea4c
+harry|dursleys|The Dursleys didn't believe Harry when he said he wouldn't cause any trouble, due to past experiences of strange occurrences around him.|ef6c8ca593d54b3f84ee495f0601ea4c
+harry|aunt petunia|Aunt Petunia tries to force Harry to wear Dudley's old sweater, but the sweater shrinks when she tries to put it on Harry.|2f8ec371a9d748a2b4fbc0f537b331db
+harry|dudley|Harry is laughed at by Dudley for his appearance.|2f8ec371a9d748a2b4fbc0f537b331db
+harry|aunt petunia|Aunt Petunia punishes Harry for having no explanation for his hair growing back quickly.|2f8ec371a9d748a2b4fbc0f537b331db
+aunt petunia|harry|Aunt Petunia tries to cut Harry's hair short.|2f8ec371a9d748a2b4fbc0f537b331db
+harry|aunt petunia|Harry is punished by Aunt Petunia for having his hair grow back quickly.|2f8ec371a9d748a2b4fbc0f537b331db
+harry|school kitchens|Harry was found on the roof of the school kitchens|b89df2b494af431e8142f1bea9311c57
+harry|dudley's gang|Dudley's gang was chasing Harry when he was found on the roof of the school kitchens|b89df2b494af431e8142f1bea9311c57
+harry|headmistress|The headmistress wrote an angry letter to the Dursleys because Harry was found on the roof of the school kitchens|b89df2b494af431e8142f1bea9311c57
+uncle vernon|motorcycles|Uncle Vernon dislikes motorcycles and got angry when Harry mentioned a flying motorcycle in his dream|b89df2b494af431e8142f1bea9311c57
+dreams|reality|Dreams are not a part of reality, Harry wished he hadn't mentioned his dream to the Dursleys as they dislike anything that doesn't conform to the expected behavior.|46a1d0d5311245d698074b7e70a098e9
+dudley and piers|harry|Dudley and Piers are the abusers of Harry, they dislike Harry and often hit him.|46a1d0d5311245d698074b7e70a098e9
+zoo|family outing|Zoo is a place where families go for entertainment and recreation.|46a1d0d5311245d698074b7e70a098e9
+uncle vernon|dudley and piers|Uncle Vernon is the guardian of Dudley and Piers.|46a1d0d5311245d698074b7e70a098e9
+harry|animals|Harry observes animals at the zoo.|46a1d0d5311245d698074b7e70a098e9
+dudley|gorilla|Dudley resembles a gorilla in appearance.|46a1d0d5311245d698074b7e70a098e9
+snake|beady eyes|The snake opened its beady eyes.|133601aa516b43de9ae1a7191c70dabd
+snake|harry|The snake raised its head until its eyes were on a level with Harry’s and winked.|133601aa516b43de9ae1a7191c70dabd
+snake|uncle vernon and dudley|The snake jerked its head toward Uncle Vernon and Dudley.|133601aa516b43de9ae1a7191c70dabd
+snake|ceiling|The snake raised its eyes to the ceiling.|133601aa516b43de9ae1a7191c70dabd
+snake|harry|The snake gave Harry a look that said quite plainly: 'I get that all the time.'|133601aa516b43de9ae1a7191c70dabd
+snake|annoying|The snake nodded vigorously and gave Harry a look that said quite plainly: 'I get that all the time.' Harry murmured, 'It must be really annoying.'|133601aa516b43de9ae1a7191c70dabd
+snake|harry|Harry stared. Then he looked quickly around to see if anyone was watching. They weren’t. He looked back at the snake and winked, too.|133601aa516b43de9ae1a7191c70dabd
+snake|glass|Harry looked back at the snake and winked, too. He murmured through the glass, though he wasn’t sure the snake could hear him.|133601aa516b43de9ae1a7191c70dabd
+snake|anyone|Harry looked quickly around to see if anyone was watching.|133601aa516b43de9ae1a7191c70dabd

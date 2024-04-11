@@ -1,0 +1,522 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="animals">animals</option>
+                                
+                                    <option value="dudley and piers">dudley and piers</option>
+                                
+                                    <option value="harry">harry</option>
+                                
+                                    <option value="annoying">annoying</option>
+                                
+                                    <option value="snake">snake</option>
+                                
+                                    <option value="anyone">anyone</option>
+                                
+                                    <option value="aunt petunia">aunt petunia</option>
+                                
+                                    <option value="dudley">dudley</option>
+                                
+                                    <option value="harry potter">harry potter</option>
+                                
+                                    <option value="marge">marge</option>
+                                
+                                    <option value="mrs. figg">mrs. figg</option>
+                                
+                                    <option value="uncle vernon">uncle vernon</option>
+                                
+                                    <option value="beady eyes">beady eyes</option>
+                                
+                                    <option value="boy who lived">boy who lived</option>
+                                
+                                    <option value="people">people</option>
+                                
+                                    <option value="bringing harry potter">bringing harry potter</option>
+                                
+                                    <option value="dumbledore">dumbledore</option>
+                                
+                                    <option value="hagrid">hagrid</option>
+                                
+                                    <option value="bundle of blankets">bundle of blankets</option>
+                                
+                                    <option value="professor mcgonagall">professor mcgonagall</option>
+                                
+                                    <option value="cat">cat</option>
+                                
+                                    <option value="mr. dursley">mr. dursley</option>
+                                
+                                    <option value="stranger">stranger</option>
+                                
+                                    <option value="ceiling">ceiling</option>
+                                
+                                    <option value="concentration">concentration</option>
+                                
+                                    <option value="fear">fear</option>
+                                
+                                    <option value="dreams">dreams</option>
+                                
+                                    <option value="reality">reality</option>
+                                
+                                    <option value="gorilla">gorilla</option>
+                                
+                                    <option value="family outing">family outing</option>
+                                
+                                    <option value="zoo">zoo</option>
+                                
+                                    <option value="dudley's gang">dudley's gang</option>
+                                
+                                    <option value="harry potter's aunt and uncle">harry potter's aunt and uncle</option>
+                                
+                                    <option value="lily and james potter">lily and james potter</option>
+                                
+                                    <option value="motorcycle">motorcycle</option>
+                                
+                                    <option value="privet drive">privet drive</option>
+                                
+                                    <option value="sirius black">sirius black</option>
+                                
+                                    <option value="tabby cat">tabby cat</option>
+                                
+                                    <option value="voldemort">voldemort</option>
+                                
+                                    <option value="dursleys">dursleys</option>
+                                
+                                    <option value="his nephew">his nephew</option>
+                                
+                                    <option value="his sister">his sister</option>
+                                
+                                    <option value="people in cloaks">people in cloaks</option>
+                                
+                                    <option value="upset">upset</option>
+                                
+                                    <option value="glass">glass</option>
+                                
+                                    <option value="glasses">glasses</option>
+                                
+                                    <option value="vanquished">vanquished</option>
+                                
+                                    <option value="group of people in cloaks">group of people in cloaks</option>
+                                
+                                    <option value="owls">owls</option>
+                                
+                                    <option value="people down in the street">people down in the street</option>
+                                
+                                    <option value="the potters">the potters</option>
+                                
+                                    <option value="headmistress">headmistress</option>
+                                
+                                    <option value="motorcycles">motorcycles</option>
+                                
+                                    <option value="school kitchens">school kitchens</option>
+                                
+                                    <option value="uncle vernon and dudley">uncle vernon and dudley</option>
+                                
+                                    <option value="muggle">muggle</option>
+                                
+                                    <option value="the cat">the cat</option>
+                                
+                                    <option value="you-know-who">you-know-who</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"group": 1, "id": "animals", "label": "animals", "shape": "dot", "size": 2}, {"group": 1, "id": "dudley and piers", "label": "dudley and piers", "shape": "dot", "size": 9}, {"group": 1, "id": "harry", "label": "harry", "shape": "dot", "size": 25}, {"group": 1, "id": "annoying", "label": "annoying", "shape": "dot", "size": 2}, {"group": 1, "id": "snake", "label": "snake", "shape": "dot", "size": 7}, {"group": 1, "id": "anyone", "label": "anyone", "shape": "dot", "size": 2}, {"group": 1, "id": "aunt petunia", "label": "aunt petunia", "shape": "dot", "size": 6}, {"group": 1, "id": "dudley", "label": "dudley", "shape": "dot", "size": 6}, {"group": 2, "id": "harry potter", "label": "harry potter", "shape": "dot", "size": 16}, {"group": 1, "id": "marge", "label": "marge", "shape": "dot", "size": 4}, {"group": 1, "id": "mrs. figg", "label": "mrs. figg", "shape": "dot", "size": 6}, {"group": 1, "id": "uncle vernon", "label": "uncle vernon", "shape": "dot", "size": 8}, {"group": 1, "id": "beady eyes", "label": "beady eyes", "shape": "dot", "size": 2}, {"group": 2, "id": "boy who lived", "label": "boy who lived", "shape": "dot", "size": 2}, {"group": 2, "id": "people", "label": "people", "shape": "dot", "size": 4}, {"group": 2, "id": "bringing harry potter", "label": "bringing harry potter", "shape": "dot", "size": 2}, {"group": 2, "id": "dumbledore", "label": "dumbledore", "shape": "dot", "size": 12}, {"group": 2, "id": "hagrid", "label": "hagrid", "shape": "dot", "size": 10}, {"group": 2, "id": "bundle of blankets", "label": "bundle of blankets", "shape": "dot", "size": 3}, {"group": 2, "id": "professor mcgonagall", "label": "professor mcgonagall", "shape": "dot", "size": 11}, {"group": 3, "id": "cat", "label": "cat", "shape": "dot", "size": 2}, {"group": 3, "id": "mr. dursley", "label": "mr. dursley", "shape": "dot", "size": 17}, {"group": 3, "id": "stranger", "label": "stranger", "shape": "dot", "size": 4}, {"group": 1, "id": "ceiling", "label": "ceiling", "shape": "dot", "size": 2}, {"group": 3, "id": "concentration", "label": "concentration", "shape": "dot", "size": 2}, {"group": 3, "id": "fear", "label": "fear", "shape": "dot", "size": 6}, {"group": 1, "id": "dreams", "label": "dreams", "shape": "dot", "size": 3}, {"group": 1, "id": "reality", "label": "reality", "shape": "dot", "size": 3}, {"group": 1, "id": "gorilla", "label": "gorilla", "shape": "dot", "size": 3}, {"group": 1, "id": "family outing", "label": "family outing", "shape": "dot", "size": 3}, {"group": 1, "id": "zoo", "label": "zoo", "shape": "dot", "size": 3}, {"group": 1, "id": "dudley\u0027s gang", "label": "dudley\u0027s gang", "shape": "dot", "size": 1}, {"group": 2, "id": "harry potter\u0027s aunt and uncle", "label": "harry potter\u0027s aunt and uncle", "shape": "dot", "size": 3}, {"group": 2, "id": "lily and james potter", "label": "lily and james potter", "shape": "dot", "size": 5}, {"group": 2, "id": "motorcycle", "label": "motorcycle", "shape": "dot", "size": 3}, {"group": 2, "id": "privet drive", "label": "privet drive", "shape": "dot", "size": 3}, {"group": 2, "id": "sirius black", "label": "sirius black", "shape": "dot", "size": 4}, {"group": 2, "id": "tabby cat", "label": "tabby cat", "shape": "dot", "size": 3}, {"group": 2, "id": "voldemort", "label": "voldemort", "shape": "dot", "size": 3}, {"group": 1, "id": "dursleys", "label": "dursleys", "shape": "dot", "size": 1}, {"group": 3, "id": "his nephew", "label": "his nephew", "shape": "dot", "size": 2}, {"group": 3, "id": "his sister", "label": "his sister", "shape": "dot", "size": 2}, {"group": 3, "id": "people in cloaks", "label": "people in cloaks", "shape": "dot", "size": 2}, {"group": 3, "id": "upset", "label": "upset", "shape": "dot", "size": 2}, {"group": 1, "id": "glass", "label": "glass", "shape": "dot", "size": 2}, {"group": 2, "id": "glasses", "label": "glasses", "shape": "dot", "size": 3}, {"group": 2, "id": "vanquished", "label": "vanquished", "shape": "dot", "size": 3}, {"group": 3, "id": "group of people in cloaks", "label": "group of people in cloaks", "shape": "dot", "size": 5}, {"group": 3, "id": "owls", "label": "owls", "shape": "dot", "size": 2}, {"group": 3, "id": "people down in the street", "label": "people down in the street", "shape": "dot", "size": 2}, {"group": 3, "id": "the potters", "label": "the potters", "shape": "dot", "size": 4}, {"group": 1, "id": "headmistress", "label": "headmistress", "shape": "dot", "size": 1}, {"group": 1, "id": "motorcycles", "label": "motorcycles", "shape": "dot", "size": 2}, {"group": 1, "id": "school kitchens", "label": "school kitchens", "shape": "dot", "size": 1}, {"group": 1, "id": "uncle vernon and dudley", "label": "uncle vernon and dudley", "shape": "dot", "size": 2}, {"group": 3, "id": "muggle", "label": "muggle", "shape": "dot", "size": 2}, {"group": 3, "id": "the cat", "label": "the cat", "shape": "dot", "size": 2}, {"group": 3, "id": "you-know-who", "label": "you-know-who", "shape": "dot", "size": 2}]);
+                  edges = new vis.DataSet([{"from": "animals", "title": "contextual proximity", "to": "dudley and piers", "width": 0.5}, {"from": "animals", "title": "Harry observes animals at the zoo.,contextual proximity", "to": "harry", "width": 1.5}, {"from": "annoying", "title": "contextual proximity", "to": "harry", "width": 0.75}, {"from": "annoying", "title": "The snake nodded vigorously and gave Harry a look that said quite plainly: \u0027I get that all the time.\u0027 Harry murmured, \u0027It must be really annoying.\u0027,contextual proximity", "to": "snake", "width": 3.25}, {"from": "anyone", "title": "contextual proximity", "to": "harry", "width": 0.75}, {"from": "anyone", "title": "Harry looked quickly around to see if anyone was watching.,contextual proximity", "to": "snake", "width": 3.25}, {"from": "aunt petunia", "title": "Aunt Petunia is Dudley\u0027s mother.,contextual proximity", "to": "dudley", "width": 4.5}, {"from": "aunt petunia", "title": "Aunt Petunia is Harry\u0027s aunt and often compares Dudley to a baby angel while Harry is compared to a pig.,Aunt Petunia tries to force Harry to wear Dudley\u0027s old sweater, but the sweater shrinks when she tries to put it on Harry.,Aunt Petunia punishes Harry for having no explanation for his hair growing back quickly.,Harry is punished by Aunt Petunia for having his hair grow back quickly.,contextual proximity", "to": "harry", "width": 11.5}, {"from": "aunt petunia", "title": "contextual proximity", "to": "harry potter", "width": 2.25}, {"from": "aunt petunia", "title": "contextual proximity", "to": "marge", "width": 1.5}, {"from": "aunt petunia", "title": "Aunt Petunia dislikes Harry and doesn\u0027t want him to stay with them when Mrs. Figg is unable to take care of him.,contextual proximity", "to": "mrs. figg", "width": 4.25}, {"from": "aunt petunia", "title": "contextual proximity", "to": "uncle vernon", "width": 4.25}, {"from": "beady eyes", "title": "contextual proximity", "to": "harry", "width": 0.75}, {"from": "beady eyes", "title": "The snake opened its beady eyes.,contextual proximity", "to": "snake", "width": 3.25}, {"from": "boy who lived", "title": "Harry Potter is referred to as \u0027the boy who lived\u0027,contextual proximity", "to": "harry potter", "width": 1.75}, {"from": "boy who lived", "title": "contextual proximity", "to": "people", "width": 0.5}, {"from": "bringing harry potter", "title": "contextual proximity", "to": "dumbledore", "width": 0.75}, {"from": "bringing harry potter", "title": "Hagrid is bringing Harry Potter,contextual proximity", "to": "hagrid", "width": 1.5}, {"from": "bundle of blankets", "title": "Dumbledore can see a bundle of blankets on the step of number four.,contextual proximity", "to": "dumbledore", "width": 3.0}, {"from": "bundle of blankets", "title": "contextual proximity", "to": "hagrid", "width": 0.75}, {"from": "bundle of blankets", "title": "contextual proximity", "to": "professor mcgonagall", "width": 0.5}, {"from": "cat", "title": "Mr. Dursley saw the cat on his garden wall twice,contextual proximity", "to": "mr. dursley", "width": 1.5}, {"from": "cat", "title": "contextual proximity", "to": "stranger", "width": 0.75}, {"from": "ceiling", "title": "contextual proximity", "to": "harry", "width": 0.75}, {"from": "ceiling", "title": "The snake raised its eyes to the ceiling.,contextual proximity", "to": "snake", "width": 3.25}, {"from": "concentration", "title": "contextual proximity", "to": "fear", "width": 0.75}, {"from": "concentration", "title": "Mr. Dursley found it hard to concentrate on drills because of his worry.,contextual proximity", "to": "mr. dursley", "width": 2.5}, {"from": "dreams", "title": "contextual proximity", "to": "dudley and piers", "width": 0.5}, {"from": "dreams", "title": "contextual proximity", "to": "harry", "width": 0.5}, {"from": "dreams", "title": "Dreams are not a part of reality, Harry wished he hadn\u0027t mentioned his dream to the Dursleys as they dislike anything that doesn\u0027t conform to the expected behavior.", "to": "reality", "width": 1.0}, {"from": "dudley", "title": "contextual proximity", "to": "dudley and piers", "width": 0.5}, {"from": "dudley", "title": "Dudley resembles a gorilla in appearance.", "to": "gorilla", "width": 1.0}, {"from": "dudley", "title": "Dudley is Harry\u0027s cousin and often receives more presents than Harry.,Harry is laughed at by Dudley for his appearance.,contextual proximity", "to": "harry", "width": 7.0}, {"from": "dudley", "title": "contextual proximity", "to": "mrs. figg", "width": 1.0}, {"from": "dudley", "title": "Uncle Vernon ruffles Dudley\u0027s hair and praises him for wanting \u0027his money\u0027s worth\u0027.,contextual proximity", "to": "uncle vernon", "width": 3.75}, {"from": "dudley and piers", "title": "contextual proximity", "to": "family outing", "width": 0.5}, {"from": "dudley and piers", "title": "contextual proximity", "to": "gorilla", "width": 0.5}, {"from": "dudley and piers", "title": "contextual proximity", "to": "harry", "width": 1.0}, {"from": "dudley and piers", "title": "contextual proximity", "to": "reality", "width": 0.5}, {"from": "dudley and piers", "title": "Uncle Vernon is the guardian of Dudley and Piers.,contextual proximity", "to": "uncle vernon", "width": 1.5}, {"from": "dudley and piers", "title": "contextual proximity", "to": "zoo", "width": 0.5}, {"from": "dudley\u0027s gang", "title": "Dudley\u0027s gang was chasing Harry when he was found on the roof of the school kitchens,contextual proximity", "to": "harry", "width": 1.75}, {"from": "dumbledore", "title": "Hagrid borrowed a motorcycle from Sirius Black and brought Harry Potter to Hogwarts. Dumbledore was relieved to see Hagrid and asked about the motorcycle and Harry.,Hagrid asks Dumbledore if he can say goodbye to Harry, and Dumbledore allows it. Dumbledore is the headmaster of Hogwarts and Hagrid is a caretaker at the school.,Dumbledore and Hagrid say goodbye to each other.,contextual proximity", "to": "hagrid", "width": 14.25}, {"from": "dumbledore", "title": "Dumbledore recognized Harry Potter by his scar and welcomed him to Hogwarts.,contextual proximity", "to": "harry potter", "width": 7.75}, {"from": "dumbledore", "title": "contextual proximity", "to": "harry potter\u0027s aunt and uncle", "width": 1.5}, {"from": "dumbledore", "title": "contextual proximity", "to": "lily and james potter", "width": 1.25}, {"from": "dumbledore", "title": "contextual proximity", "to": "motorcycle", "width": 2.0}, {"from": "dumbledore", "title": "contextual proximity", "to": "privet drive", "width": 2.0}, {"from": "dumbledore", "title": "Professor McGonagall was anxious to discuss with Dumbledore the rumors about Voldemort\u0027s recent appearance in Godric\u0027s Hollow and the supposed death of the Potters. Dumbledore remained silent on the matter.,Professor McGonagall disagrees with Dumbledore about Harry\u0027s new family, believing they will not understand him due to their behavior. Dumbledore insists that they are the best place for Harry to live and has written them a letter.,Professor McGonagall questions Dumbledore\u0027s decision to trust Hagrid,Dumbledore nods to Professor McGonagall and Professor McGonagall blows her nose in reply.,contextual proximity", "to": "professor mcgonagall", "width": 14.25}, {"from": "dumbledore", "title": "contextual proximity", "to": "sirius black", "width": 0.5}, {"from": "dumbledore", "title": "contextual proximity", "to": "tabby cat", "width": 2.0}, {"from": "dumbledore", "title": "contextual proximity", "to": "voldemort", "width": 1.0}, {"from": "dursleys", "title": "The Dursleys didn\u0027t believe Harry when he said he wouldn\u0027t cause any trouble, due to past experiences of strange occurrences around him.,contextual proximity", "to": "harry", "width": 1.5}, {"from": "family outing", "title": "contextual proximity", "to": "harry", "width": 0.5}, {"from": "family outing", "title": "Zoo is a place where families go for entertainment and recreation.", "to": "zoo", "width": 1.0}, {"from": "fear", "title": "contextual proximity", "to": "his nephew", "width": 0.75}, {"from": "fear", "title": "contextual proximity", "to": "his sister", "width": 0.75}, {"from": "fear", "title": "Mr. Dursley was flooded with fear when he saw the whisperers.,Mr. Dursley thought better of it and didn\u2019t want to mention the whisperers to fear.,contextual proximity", "to": "mr. dursley", "width": 6.5}, {"from": "fear", "title": "contextual proximity", "to": "people in cloaks", "width": 0.75}, {"from": "fear", "title": "contextual proximity", "to": "upset", "width": 0.75}, {"from": "glass", "title": "contextual proximity", "to": "harry", "width": 0.75}, {"from": "glass", "title": "Harry looked back at the snake and winked, too. He murmured through the glass, though he wasn\u2019t sure the snake could hear him.,contextual proximity", "to": "snake", "width": 3.25}, {"from": "glasses", "title": "contextual proximity", "to": "harry potter", "width": 0.75}, {"from": "glasses", "title": "contextual proximity", "to": "people", "width": 0.5}, {"from": "glasses", "title": "People are holding up their glasses, a symbol of vanquishing something", "to": "vanquished", "width": 1.0}, {"from": "gorilla", "title": "contextual proximity", "to": "harry", "width": 0.5}, {"from": "group of people in cloaks", "title": "contextual proximity", "to": "harry", "width": 0.75}, {"from": "group of people in cloaks", "title": "Mr. Dursley eyed the group of people in cloaks angrily as he passed them. He didn\u2019t know why, but they made him uneasy.,contextual proximity", "to": "mr. dursley", "width": 3.25}, {"from": "group of people in cloaks", "title": "contextual proximity", "to": "owls", "width": 0.75}, {"from": "group of people in cloaks", "title": "contextual proximity", "to": "people down in the street", "width": 0.75}, {"from": "group of people in cloaks", "title": "contextual proximity", "to": "the potters", "width": 0.75}, {"from": "hagrid", "title": "contextual proximity", "to": "harry potter", "width": 4.25}, {"from": "hagrid", "title": "contextual proximity", "to": "lily and james potter", "width": 0.75}, {"from": "hagrid", "title": "contextual proximity", "to": "motorcycle", "width": 0.75}, {"from": "hagrid", "title": "contextual proximity", "to": "privet drive", "width": 0.75}, {"from": "hagrid", "title": "Professor McGonagall tries to quiet Hagrid to prevent them from being heard by Muggles.,contextual proximity", "to": "professor mcgonagall", "width": 5.25}, {"from": "hagrid", "title": "contextual proximity", "to": "sirius black", "width": 0.75}, {"from": "hagrid", "title": "contextual proximity", "to": "tabby cat", "width": 0.75}, {"from": "harry", "title": "contextual proximity", "to": "headmistress", "width": 0.75}, {"from": "harry", "title": "contextual proximity", "to": "motorcycles", "width": 0.75}, {"from": "harry", "title": "contextual proximity", "to": "mr. dursley", "width": 0.75}, {"from": "harry", "title": "Mrs. Figg is unable to take care of Harry due to her broken leg.,contextual proximity", "to": "mrs. figg", "width": 2.0}, {"from": "harry", "title": "contextual proximity", "to": "reality", "width": 0.5}, {"from": "harry", "title": "contextual proximity", "to": "school kitchens", "width": 0.75}, {"from": "harry", "title": "The snake raised its head until its eyes were on a level with Harry\u2019s and winked.,The snake gave Harry a look that said quite plainly: \u0027I get that all the time.\u0027,Harry stared. Then he looked quickly around to see if anyone was watching. They weren\u2019t. He looked back at the snake and winked, too.,contextual proximity", "to": "snake", "width": 9.75}, {"from": "harry", "title": "contextual proximity", "to": "uncle vernon", "width": 4.25}, {"from": "harry", "title": "contextual proximity", "to": "uncle vernon and dudley", "width": 0.75}, {"from": "harry", "title": "contextual proximity", "to": "zoo", "width": 0.5}, {"from": "harry potter", "title": "contextual proximity", "to": "harry potter\u0027s aunt and uncle", "width": 1.0}, {"from": "harry potter", "title": "contextual proximity", "to": "lily and james potter", "width": 0.5}, {"from": "harry potter", "title": "contextual proximity", "to": "marge", "width": 1.5}, {"from": "harry potter", "title": "Mr. Dursley has negative opinion about Harry Potter and his family.,contextual proximity", "to": "mr. dursley", "width": 1.5}, {"from": "harry potter", "title": "Mrs. Figg takes care of Harry every year when Dudley goes out with friends. Harry hates staying with her.,contextual proximity", "to": "mrs. figg", "width": 3.25}, {"from": "harry potter", "title": "People are raising a toast to Harry Potter, referring to him as \u0027the boy who lived\u0027,People are expressing their admiration and respect towards Harry Potter by toasting to him,contextual proximity", "to": "people", "width": 3.5}, {"from": "harry potter", "title": "Professor McGonagall expresses concern for Harry\u0027s well-being and believes he will not be understood by his new family.,contextual proximity", "to": "professor mcgonagall", "width": 4.75}, {"from": "harry potter", "title": "contextual proximity", "to": "sirius black", "width": 0.5}, {"from": "harry potter", "title": "contextual proximity", "to": "the potters", "width": 0.5}, {"from": "harry potter", "title": "Uncle Vernon suggests leaving Harry at home when Mrs. Figg is unable to take care of him.,contextual proximity", "to": "uncle vernon", "width": 3.25}, {"from": "harry potter", "title": "contextual proximity", "to": "vanquished", "width": 0.75}, {"from": "harry potter\u0027s aunt and uncle", "title": "Professor McGonagall doubts that Harry\u0027s aunt and uncle will be able to understand or accept Harry due to their behavior.,contextual proximity", "to": "professor mcgonagall", "width": 2.5}, {"from": "his nephew", "title": "Mr. Dursley was worried about his nephew, but he wasn\u2019t sure of his name.,contextual proximity", "to": "mr. dursley", "width": 2.5}, {"from": "his sister", "title": "Mr. Dursley didn\u2019t want to upset his sister by mentioning her sister.,contextual proximity", "to": "mr. dursley", "width": 2.5}, {"from": "lily and james potter", "title": "Professor McGonagall passed on the rumors that Lily and James Potter had been killed by Voldemort.,contextual proximity", "to": "professor mcgonagall", "width": 2.0}, {"from": "lily and james potter", "title": "contextual proximity", "to": "voldemort", "width": 0.5}, {"from": "marge", "title": "contextual proximity", "to": "mrs. figg", "width": 1.5}, {"from": "marge", "title": "Uncle Vernon suggests calling Marge to take care of Harry instead of Mrs. Figg.,contextual proximity", "to": "uncle vernon", "width": 2.5}, {"from": "motorcycle", "title": "contextual proximity", "to": "professor mcgonagall", "width": 0.5}, {"from": "motorcycles", "title": "Uncle Vernon dislikes motorcycles and got angry when Harry mentioned a flying motorcycle in his dream", "to": "uncle vernon", "width": 1.0}, {"from": "mr. dursley", "title": "contextual proximity", "to": "muggle", "width": 0.5}, {"from": "mr. dursley", "title": "contextual proximity", "to": "owls", "width": 0.75}, {"from": "mr. dursley", "title": "contextual proximity", "to": "people down in the street", "width": 0.75}, {"from": "mr. dursley", "title": "contextual proximity", "to": "people in cloaks", "width": 1.5}, {"from": "mr. dursley", "title": "contextual proximity", "to": "stranger", "width": 1.5}, {"from": "mr. dursley", "title": "contextual proximity", "to": "the cat", "width": 0.5}, {"from": "mr. dursley", "title": "contextual proximity", "to": "the potters", "width": 1.75}, {"from": "mr. dursley", "title": "contextual proximity", "to": "upset", "width": 1.5}, {"from": "mr. dursley", "title": "contextual proximity", "to": "you-know-who", "width": 0.5}, {"from": "mrs. figg", "title": "contextual proximity", "to": "uncle vernon", "width": 3.25}, {"from": "muggle", "title": "The stranger called Mr. Dursley a Muggle,contextual proximity", "to": "stranger", "width": 1.75}, {"from": "people", "title": "contextual proximity", "to": "vanquished", "width": 0.5}, {"from": "privet drive", "title": "contextual proximity", "to": "professor mcgonagall", "width": 0.5}, {"from": "professor mcgonagall", "title": "contextual proximity", "to": "sirius black", "width": 0.5}, {"from": "professor mcgonagall", "title": "contextual proximity", "to": "tabby cat", "width": 0.5}, {"from": "professor mcgonagall", "title": "contextual proximity", "to": "voldemort", "width": 1.5}, {"from": "snake", "title": "contextual proximity", "to": "uncle vernon and dudley", "width": 2.25}, {"from": "stranger", "title": "contextual proximity", "to": "you-know-who", "width": 0.75}, {"from": "the cat", "title": "contextual proximity", "to": "the potters", "width": 0.5}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.015,
+            "damping": 0.4,
+            "gravitationalConstant": -31,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
