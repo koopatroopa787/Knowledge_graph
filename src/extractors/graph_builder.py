@@ -188,46 +188,78 @@ class GraphBuilder:
 
             # Create Pyvis network
             net = Network(
+                notebook=False,
                 bgcolor=bgcolor,
                 height=height,
                 width=width,
                 select_menu=True,
+                filter_menu=True,
                 font_color=font_color,
+                cdn_resources='remote'
             )
 
-            # Rebuild graph with visual properties
-            G_vis = nx.Graph()
-
-            # Add nodes with visual properties
+            # Add nodes directly to Pyvis network
             for _, row in nodes.iterrows():
-                node_id = row["entity_L"]
-                G_vis.add_node(
+                node_id = str(row["entity_L"])
+                importance = float(row["importance_L"])
+                net.add_node(
                     node_id,
-                    size=row["importance_L"] * self.node_size_multiple,
-                    title=f"{node_id} (importance: {row['importance_L']:.1f})",
-                    color=color_map.get(node_id, "#97c2fc"),
-                    label=node_id
+                    label=node_id,
+                    size=importance * self.node_size_multiple,
+                    title=f"{node_id}<br>Importance: {importance:.1f}",
+                    color=color_map.get(row["entity_L"], "#97c2fc")
                 )
 
-            # Add edges with properties
+            # Add edges directly to Pyvis network
             for _, row in graph_df.iterrows():
-                G_vis.add_edge(
-                    row["entity_L"],
-                    row["entity_R"],
-                    weight=row["count"],
-                    title=f"Co-occurs {row['count']} times\nChunks: {row['chunks'][:100]}...",
-                    value=row["count"]
-                )
+                source = str(row["entity_L"])
+                target = str(row["entity_R"])
+                count = int(row["count"])
+                chunks_preview = str(row["chunks"])[:100]
 
-            # Convert to Pyvis
-            net.from_nx(G_vis)
+                net.add_edge(
+                    source,
+                    target,
+                    value=count,
+                    title=f"Co-occurs {count} times<br>Chunks: {chunks_preview}..."
+                )
 
             # Set physics options
-            net.repulsion(
-                node_distance=node_distance,
-                spring_length=spring_length
-            )
-            net.show_buttons(filter_=["physics"])
+            net.set_options("""
+            {
+              "physics": {
+                "enabled": true,
+                "barnesHut": {
+                  "gravitationalConstant": -30000,
+                  "centralGravity": 0.3,
+                  "springLength": """ + str(spring_length) + """,
+                  "springConstant": 0.04,
+                  "damping": 0.09,
+                  "avoidOverlap": 0.1
+                },
+                "maxVelocity": 50,
+                "minVelocity": 0.1,
+                "solver": "barnesHut",
+                "stabilization": {
+                  "enabled": true,
+                  "iterations": 1000,
+                  "updateInterval": 25
+                }
+              },
+              "nodes": {
+                "font": {
+                  "color": \"""" + font_color + """\"
+                }
+              },
+              "edges": {
+                "smooth": {
+                  "enabled": true,
+                  "type": "continuous"
+                }
+              }
+            }
+            """)
+            net.show_buttons(filter_=['physics'])
 
             # Save
             output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -256,21 +288,23 @@ class GraphBuilder:
             graph_df.to_csv(csv_path, sep="|", index=False)
             logger.info(f"Saved graph CSV to {csv_path}")
 
-            # Save as JSON
+            # Save as JSON (convert numpy types to Python native types)
             json_path = output_dir / "graph.json"
-            graph_df.to_json(json_path, orient="records", indent=2)
+            graph_dict = graph_df.to_dict(orient="records")
+            import json
+            with open(json_path, 'w') as f:
+                json.dump(graph_dict, f, indent=2, default=str)
             logger.info(f"Saved graph JSON to {json_path}")
 
-            # Save graph statistics
+            # Save graph statistics (convert numpy types to Python native types)
             stats = {
-                "num_edges": len(graph_df),
-                "num_nodes": len(set(graph_df["entity_L"]) | set(graph_df["entity_R"])),
-                "avg_importance": (graph_df["importance_L"].mean() + graph_df["importance_R"].mean()) / 2,
-                "total_connections": graph_df["count"].sum(),
+                "num_edges": int(len(graph_df)),
+                "num_nodes": int(len(set(graph_df["entity_L"]) | set(graph_df["entity_R"]))),
+                "avg_importance": float((graph_df["importance_L"].mean() + graph_df["importance_R"].mean()) / 2),
+                "total_connections": int(graph_df["count"].sum()),
             }
 
             stats_path = output_dir / "graph_stats.json"
-            import json
             with open(stats_path, 'w') as f:
                 json.dump(stats, f, indent=2)
             logger.info(f"Saved graph statistics to {stats_path}")
