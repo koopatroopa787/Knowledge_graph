@@ -224,41 +224,19 @@ class GraphBuilder:
                     title=f"Co-occurs {count} times<br>Chunks: {chunks_preview}..."
                 )
 
-            # Set physics options
-            net.set_options("""
-            {
-              "physics": {
-                "enabled": true,
-                "barnesHut": {
-                  "gravitationalConstant": -30000,
-                  "centralGravity": 0.3,
-                  "springLength": """ + str(spring_length) + """,
-                  "springConstant": 0.04,
-                  "damping": 0.09,
-                  "avoidOverlap": 0.1
-                },
-                "maxVelocity": 50,
-                "minVelocity": 0.1,
-                "solver": "barnesHut",
-                "stabilization": {
-                  "enabled": true,
-                  "iterations": 1000,
-                  "updateInterval": 25
-                }
-              },
-              "nodes": {
-                "font": {
-                  "color": \"""" + font_color + """\"
-                }
-              },
-              "edges": {
-                "smooth": {
-                  "enabled": true,
-                  "type": "continuous"
-                }
-              }
-            }
-            """)
+            # Set physics options using PyVis methods
+            net.repulsion(
+                node_distance=node_distance,
+                central_gravity=0.3,
+                spring_length=spring_length,
+                spring_strength=0.04,
+                damping=0.09
+            )
+
+            # Enable smooth edges
+            net.toggle_physics(True)
+
+            # Show configuration buttons
             net.show_buttons(filter_=['physics'])
 
             # Save
