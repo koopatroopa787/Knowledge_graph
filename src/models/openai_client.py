@@ -43,8 +43,7 @@ class OpenAIClient(BaseLLMClient):
                 "max_tokens": self.max_tokens,
             }
 
-            if json_mode and "gpt-4" in self.model_name or "gpt-3.5" in self.model_name:
-                kwargs["response_format"] = {"type": "json_object"}
+            if json_mode:
                 # Add JSON instruction to system prompt if not already present
                 if "json" not in system_prompt.lower():
                     messages[0]["content"] += "\n\nRespond with valid JSON only."
